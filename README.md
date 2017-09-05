@@ -1,80 +1,86 @@
-# Constellation_searching
+# 별자리 탐색 프로그램
 
 개요
 -------------
-모바일 기기 분실을 대비한 모바일 위치 추적 앱입니다.  
-미리 설정한 명령어를 분실한 모바일 기기에 전송하여 해당 기기의 위치정보를 SMS로 받아볼 수 있습니다.  
-명령어를 통해 분실 기기의 배터리 잔량을 확인하고 배터리 절약 모드로 전환할 수 있습니다.
+밤하늘 이미지(input)와 별자리 이미지(reference)를 입력받아 별자리를 찾아 표시(output)합니다.
+별자리 이미지에 Geometric Processing을 적용하여 영상을 확대/축소, 회전할 수 있습니다.
+Open CV의 Template Matching을 통해 입력 영상과 참조영상을 비교합니다.
 
-+ JAVA
-+ Android Studio
-+ GPS제어 및 주소변환
-+ SMS송수신
-+ SMS내용 검사를 통해 명령어 판별 
-+ 배터리 잔량 확인 및 배터리 절약모드
++ C++
++ MTES
++ 영상처리
++ Geometric Processing
++ Template Matching 
 
 실행 결과
 -------------
-+ 명령어 설정 단계
++ 입력 영상과 참조 영상
 <p>
-  <img src="" vspace="10">
+  <img src="1.png" vspace="10">
+  <img src="2.png" vspace="10">
 </p>
 
-+ 명령어를 송신하면 그에 대한 정보를 수신
++ 입력 영상에 대해 흑백처리 이후, 화소값 반전
 <p>
-   <img src="" vspace="10">
+   <img src="3.png" vspace="10">
+</p>
+
++ 일정 거리내 별끼리 선긋기
+<p>
+   <img src="4.png" vspace="10">
+</p>
+
++ 참조 영상과 Template Matching으로 찾은 별자리에 사각형으로 표시
+<p>
+   <img src="5.png" vspace="10">
+</p>
+
++ 원본 영상에 사각형 표시
+<p>
+   <img src="6.png" vspace="10">
 </p>
 
 클래스 설계
 -------------
-+ MainService.java
++ Pro_Compare.h
 <pre><code>
-private GpsInfo gps;		// GPS 클래스
-private int percent;
-private String password;	// 위치 정보를 얻기 위한 명령어
-private String passbattery;		// 배터리 잔량을 얻기 위한 명령어
-private boolean getBatteryAction = false;
-String number;
-String text;
-
-public int onStartCommand(Intent intent, int flags, int startId) 
-private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver()	// 배터리잔량
-private void sendSMS(String sendNumber, String sendText)		// 문자보내기
+extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
+// 탐색 이미지에 대해서 template매칭치 계산, template에 대응하는 좌표에 구형 그리기
+int CDECL Pro_Compare(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1,KScScalarImage2dUint8* par2,int* par3,int* par4,int* par5,int* par6);
 </code></pre>
 
-+ GpsInfo.java
++ Pro_Line.h
 <pre><code>
-private final Context mContext;
-private boolean isGPSEnabled = false;		// 현재 GPS 사용유무
-private boolean isNetworkEnabled = false;	// 네트워크 사용유무 
-private boolean isGetLocation = false;		// GPS 상태값
-Location location; 
-double lat; 		// 위도 
-double lon; 		// 경도
-String mAddressStr;	// 주소
-private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;	// 최소 GPS 정보 업데이트 거리 10미터 
-private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;	// 최소 GPS 정보 업데이트 시간 밀리세컨이므로 1분
-protected LocationManager locationManager;
-  
-public GpsInfo(Context context)		// GPS 정보 반환
-public void stopUsingGPS()		// GPS 종료
-public double getLatitude()		// 위도값 반환
-public double getLongitude()		// 경도값 반환
-public boolean isGetLocation()		// 위치정보를 받아왔는지 확인
-public boolean isLocationEnabled()	// GPS나 WIFI를 이용한 위치정보를 받아올 수 있는 상태인지 확인
-public void showSettingsAlert()		// GPS정보를 받아오지 못했을 때 alert창
+// DLL 외부에서 호출하기 위해서 필요한 부분 ...
+extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
+// 별끼리 선을 그어 별자리 창출
+int CDECL Pro_Line(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1);
 </code></pre>
 
-+ SaveBattery.java
++ Pro_LookupTable.h
 <pre><code>
-public void Bright_control()	// 화면, 윈도우매니저 밝기 조절
+extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
+// 영상을 흑백으로 변환
+int CDECL Pro_LookupTable(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1);
 </code></pre>
 
-+ Sms.java
++ Pro_Rect.h
 <pre><code>
-String receiveNumber = "";
-String receiveText = "";
-    
-public void onReceive(Context context, Intent intent)	// 메세지 내용 반환
-public String getNumber ()				// 전화번호 반환
+extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
+// 영상에 사각형 그리기
+int CDECL Pro_Rect(int* par0, int* par1, int* par2, int* par3, KScRgbImage2d* par4, KScRgbImage2d* par5);
+</code></pre>
+
++ Pro_Resize.h
+<pre><code>
+extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
+// Geometric Processing
+int CDECL Pro_Resize(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1);
+</code></pre>
+
++ Pro_ShapeCompare.h
+<pre><code>
+extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
+// Template Matching
+int CDECL Pro_ShapeCompare(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1,int* par2);
 </code></pre>
