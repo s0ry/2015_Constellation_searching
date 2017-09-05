@@ -16,7 +16,7 @@ Open CV의 Template Matching을 통해 입력 영상과 참조영상을 비교�
 -------------
 + 입력 영상과 참조 영상
 <p>
-  <img src="1.png" vspace="10" width="400" height="200">
+  <img src="1.png" vspace="10" width="400" height="200" hspace="30">
   <img src="2.png" vspace="10" width="400" height="200">
 </p>
 
