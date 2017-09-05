@@ -56,7 +56,6 @@ int CDECL Pro_Compare(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1,KS
 
 + Pro_Line.h
 <pre><code>
-// DLL 외부에서 호출하기 위해서 필요한 부분 ...
 extern "C" __declspec( dllexport )		// DLL 외부에서 호출하기 위해서 필요한 부분
 // 별끼리 선을 그어 별자리 창출
 int CDECL Pro_Line(KScScalarImage2dUint8* par0,KScScalarImage2dUint8* par1);
