@@ -2,8 +2,8 @@
 
 개요
 -------------
-밤하늘 이미지(input)와 별자리 이미지(reference)를 입력받아 별자리를 찾아 표시(output)합니다.
-별자리 이미지에 Geometric Processing을 적용하여 영상을 확대/축소, 회전할 수 있습니다.
+밤하늘 이미지(input)와 별자리 이미지(reference)를 입력받아 별자리를 찾아 표시(output)합니다.  
+별자리 이미지에 Geometric Processing을 적용하여 영상을 확대/축소, 회전할 수 있습니다.  
 Open CV의 Template Matching을 통해 입력 영상과 참조영상을 비교합니다.
 
 + C++
@@ -16,28 +16,28 @@ Open CV의 Template Matching을 통해 입력 영상과 참조영상을 비교�
 -------------
 + 입력 영상과 참조 영상
 <p>
-  <img src="1.png" vspace="10">
-  <img src="2.png" vspace="10">
+  <img src="1.png" vspace="10" width="400" height="200">
+  <img src="2.png" vspace="10" width="400" height="200">
 </p>
 
 + 입력 영상에 대해 흑백처리 이후, 화소값 반전
 <p>
-   <img src="3.png" vspace="10">
+   <img src="3.png" vspace="10" width="400" height="200">
 </p>
 
 + 일정 거리내 별끼리 선긋기
 <p>
-   <img src="4.png" vspace="10">
+   <img src="4.png" vspace="10" width="400" height="200">
 </p>
 
 + 참조 영상과 Template Matching으로 찾은 별자리에 사각형으로 표시
 <p>
-   <img src="5.png" vspace="10">
+   <img src="5.png" vspace="10" width="400" height="200">
 </p>
 
 + 원본 영상에 사각형 표시
 <p>
-   <img src="6.png" vspace="10">
+   <img src="6.png" vspace="10" width="400" height="200">
 </p>
 
 클래스 설계
