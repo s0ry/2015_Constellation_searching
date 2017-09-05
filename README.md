@@ -40,6 +40,11 @@ Open CV의 Template Matching을 통해 입력 영상과 참조영상을 비교�
    <img src="6.png" vspace="10" width="400" height="200">
 </p>
 
++ 확대/축소, 회전된 영상에 대해서는 Geometric Processing을 통해 처리 
+<p>
+   <img src="7.png" vspace="10" >
+</p>
+
 클래스 설계
 -------------
 + Pro_Compare.h
